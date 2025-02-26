@@ -18,7 +18,7 @@ let codeService = {
   sendEmailCode: function (data, resolve, reject) {
     http({
       url: '/code/email',
-      data,
+      params: { email: data },
       method: 'post',
     })
       .then((res) => resolve(res))

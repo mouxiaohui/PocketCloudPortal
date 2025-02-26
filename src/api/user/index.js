@@ -33,6 +33,14 @@ let userService = {
       .then((res) => resolve(res))
       .catch((res) => reject(res))
   },
+  info: function (resolve, reject) {
+    http({
+      url: '/user',
+      method: 'get',
+    })
+      .then((res) => resolve(res))
+      .catch((res) => reject(res))
+  },
 }
 
 export default userService

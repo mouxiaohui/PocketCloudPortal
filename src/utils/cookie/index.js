@@ -6,7 +6,7 @@
 
 import cookie from 'vue-cookie'
 
-const LOGIN_TOKEN = 'login_token',
+const LOGIN_TOKEN = 'token',
   EMPTY_STR = ''
 
 export function setToken(token) {

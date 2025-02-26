@@ -13,9 +13,22 @@ const router = createRouter({
       children: [],
     },
     {
-      path: '/login',
-      name: 'Login',
-      component: () => import('@/views/login/index.vue'),
+      path: '/auth',
+      name: 'Auth',
+      component: () => import('@/views/auth/index.vue'),
+      children: [
+        {
+          path: 'login',
+          name: 'Login',
+          component: () => import('@/views/auth/login/index.vue'),
+          alias: '/', // 置默认子路由
+        },
+        {
+          path: 'register',
+          name: 'Register',
+          component: () => import('@/views/auth/register/index.vue'),
+        },
+      ],
     },
     {
       path: '/500',
@@ -31,8 +44,8 @@ const router = createRouter({
   ],
 })
 
-const toIndexPageList = ['Login'],
-  whiteList = ['Login', 'Error404', 'Error500']
+const toIndexPageList = ['Login', 'Register'],
+  whiteList = ['Login', , 'Register', 'Error404', 'Error500']
 
 // 路由拦截
 router.beforeEach((to, from, next) => {
