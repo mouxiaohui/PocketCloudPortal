@@ -2,3 +2,21 @@
 
 @import 'tailwindcss';
 
+/* 全局主题变量定义 */
+html.light {
+  --custom-main-aside-bg: #f3f3f3; /* 自定义侧边栏背景色 */
+  --custom-btn-hover-bg: #dbdbdb; /* 自定义按钮hover背景 */
+}
+
+html.dark {
+  --custom-main-aside-bg: #222226; /* 自定义侧边栏背景色 */
+  --custom-btn-hover-bg: #2b2b2e; /* 自定义按钮hover背景 */
+}
+
+/* 避免 el-tooltip 聚焦时出现默认的蓝色边框 */
+.el-tooltip__trigger:focus-visible {
+  outline: unset;
+} 
+.el-tooltip__trigger:first-child:focus-visible {
+  outline: unset;
+} 

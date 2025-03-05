@@ -10,7 +10,7 @@ const LOGIN_TOKEN = 'token',
   EMPTY_STR = ''
 
 export function setToken(token) {
-  cookie.set(LOGIN_TOKEN, token)
+  cookie.set(LOGIN_TOKEN, token, { expires: 3 })
 }
 
 export function getToken() {
