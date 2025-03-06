@@ -30,9 +30,9 @@
         </div>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item disabled class="custom-option">xiaohui</el-dropdown-item>
+            <el-dropdown-item disabled class="custom-option">{{ userStore.username }}</el-dropdown-item>
             <el-dropdown-item>修改密码</el-dropdown-item>
-            <el-dropdown-item>退出登录</el-dropdown-item>
+            <el-dropdown-item @click="handleLogout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -40,15 +40,32 @@
   </el-aside>
 
   <!-- 子菜单栏 -->
-  <el-aside width="170px" v-show="collapse" class="border-right-gray">Aside</el-aside>
+  <el-aside width="170px" v-show="collapse" class="border-right-gray"> </el-aside>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { HomeFilled } from '@element-plus/icons-vue'
 import ThemeBtn from '@/components/theme-btn/index.vue'
+import useStore from '@/stores'
+import { clearToken } from '@/utils/cookie'
+
+const router = useRouter()
+const { userStore, fileStore } = useStore()
 
 const collapse = ref(true)
+
+/**
+ * 退出登录
+ */
+const handleLogout = () => {
+  userStore.clear()
+  fileStore.clear()
+  clearToken()
+  // 跳转登录页
+  router.push({ name: 'Login' })
+}
 </script>
 
 <style>

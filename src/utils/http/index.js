@@ -55,9 +55,6 @@ http.interceptors.response.use(
   (error) => {
     // console.error(error.response)
     switch (error.response.data.code) {
-      case 'A0130':
-        error.response.data.msg = '验证码输入错误'
-        return Promise.reject(error.response.data)
       default: // 其他错误
         return Promise.reject(error.response.data)
     }

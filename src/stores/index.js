@@ -4,10 +4,12 @@
 
 'use strict'
 
-import useUserStore from './user/index'
+import { useUserStore } from './user/index'
+import { useFileStore } from './file/index'
 
 export default function useStore() {
   return {
     userStore: useUserStore(),
+    fileStore: useFileStore(),
   }
 }

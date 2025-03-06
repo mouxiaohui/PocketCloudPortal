@@ -30,6 +30,14 @@
 <script setup>
 import { Cloudy, CircleCheck, Lightning } from '@element-plus/icons-vue'
 import { RouterView } from 'vue-router'
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  // 强制亮色模式
+  const htmlEl = document.documentElement
+  htmlEl.classList.remove('dark') // 移除暗黑模式
+  htmlEl.classList.add('light') // 强制亮色模式
+})
 </script>
 
 <style scoped>

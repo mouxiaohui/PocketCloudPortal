@@ -54,8 +54,10 @@ import { ElMessage } from 'element-plus'
 import { setToken } from '@/utils/cookie'
 import userService from '@/api/user'
 import codeService from '@/api/code'
+import useStore from '@/stores'
 
 const router = useRouter()
+const { userStore, fileStore } = useStore()
 
 // 表单数据
 const loginForm = reactive({
@@ -85,7 +87,9 @@ const loginFormRef = ref({
   captcha: '',
 })
 
-// 登录方法
+/**
+ * 登录方法
+ */
 const handleLogin = async () => {
   try {
     loading.value = true
@@ -95,7 +99,22 @@ const handleLogin = async () => {
     userService.login(
       loginForm,
       (res) => {
+        // 保存token
         setToken(res.data)
+
+        // 获取用户信息
+        userService.info(
+          (res) => {
+            userStore.setUsername(res.data.username)
+            userStore.setEmail(res.data.email)
+            fileStore.setRootFileId(res.data.rootFileId)
+            fileStore.setRootFilename(res.data.rootFilename)
+          },
+          (res) => {
+            console.log('error: ', res)
+          }
+        )
+
         // 跳转首页
         router.push({ name: 'Index' })
       },
@@ -111,7 +130,9 @@ const handleLogin = async () => {
   }
 }
 
-// 获取验证码
+/**
+ * 获取验证码
+ */
 const getCaptcha = async () => {
   codeService.getCaptcha(
     (res) => {

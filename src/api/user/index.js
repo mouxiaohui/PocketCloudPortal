@@ -7,6 +7,9 @@
 import http from '@/utils/http'
 
 let userService = {
+  /**
+   * 登录
+   */
   login: function (data, resolve, reject) {
     http({
       url: '/user/login',
@@ -16,6 +19,9 @@ let userService = {
       .then((res) => resolve(res))
       .catch((res) => reject(res))
   },
+  /**
+   * 登出
+   */
   logout: function (resolve, reject) {
     http({
       url: '/user/logout',
@@ -24,6 +30,9 @@ let userService = {
       .then((res) => resolve(res))
       .catch((res) => reject(res))
   },
+  /**
+   * 注册
+   */
   register: function (data, resolve, reject) {
     http({
       url: '/user/register',
@@ -33,6 +42,9 @@ let userService = {
       .then((res) => resolve(res))
       .catch((res) => reject(res))
   },
+  /**
+   * 获取用户信息
+   */
   info: function (resolve, reject) {
     http({
       url: '/user',

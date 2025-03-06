@@ -5,13 +5,36 @@
 'use strict'
 
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
-export const useUserStore = defineStore('user', {
-  state: () => {
+export const useUserStore = defineStore(
+  'user',
+  () => {
+    const username = ref('')
+    const email = ref('')
+
+    function setUsername(newUsername) {
+      username.value = newUsername
+    }
+
+    function setEmail(newEmail) {
+      email.value = newEmail
+    }
+
+    function clear() {
+      username.value = ''
+      email.value = ''
+    }
+
     return {
-      id: -1,
-      username: '',
-      email: '',
+      username,
+      email,
+      setUsername,
+      setEmail,
+      clear,
     }
   },
-})
+  {
+    persist: true, // 持久化
+  }
+)

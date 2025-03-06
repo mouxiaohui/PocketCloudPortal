@@ -7,6 +7,9 @@
 import http from '@/utils/http'
 
 let codeService = {
+  /**
+   * 获取图片验证码 
+   */
   getCaptcha: function (resolve, reject) {
     http({
       url: '/code/captcha',
@@ -15,6 +18,9 @@ let codeService = {
       .then((res) => resolve(res))
       .catch((res) => reject(res))
   },
+  /**
+   * 获取邮箱验证码 
+   */
   sendEmailCode: function (data, resolve, reject) {
     http({
       url: '/code/email',
