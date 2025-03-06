@@ -6,6 +6,97 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "7684621",
+      "name": "audio",
+      "font_class": "audio",
+      "unicode": "e665",
+      "unicode_decimal": 58981
+    },
+    {
+      "icon_id": "7684624",
+      "name": "csv",
+      "font_class": "csv",
+      "unicode": "e666",
+      "unicode_decimal": 58982
+    },
+    {
+      "icon_id": "7684633",
+      "name": "image",
+      "font_class": "image",
+      "unicode": "e667",
+      "unicode_decimal": 58983
+    },
+    {
+      "icon_id": "7684652",
+      "name": "video",
+      "font_class": "video",
+      "unicode": "e66d",
+      "unicode_decimal": 58989
+    },
+    {
+      "icon_id": "7684653",
+      "name": "txt",
+      "font_class": "txt",
+      "unicode": "e66c",
+      "unicode_decimal": 58988
+    },
+    {
+      "icon_id": "11447563",
+      "name": "ppt3",
+      "font_class": "ppt",
+      "unicode": "e805",
+      "unicode_decimal": 59397
+    },
+    {
+      "icon_id": "11447564",
+      "name": "excel3",
+      "font_class": "excel",
+      "unicode": "e806",
+      "unicode_decimal": 59398
+    },
+    {
+      "icon_id": "11447565",
+      "name": "word3",
+      "font_class": "word",
+      "unicode": "e807",
+      "unicode_decimal": 59399
+    },
+    {
+      "icon_id": "11447566",
+      "name": "pdf3",
+      "font_class": "pdf",
+      "unicode": "e808",
+      "unicode_decimal": 59400
+    },
+    {
+      "icon_id": "11448884",
+      "name": "文件夹",
+      "font_class": "wenjianjia",
+      "unicode": "e80c",
+      "unicode_decimal": 59404
+    },
+    {
+      "icon_id": "33809522",
+      "name": "未知3",
+      "font_class": "weizhi3",
+      "unicode": "e84e",
+      "unicode_decimal": 59470
+    },
+    {
+      "icon_id": "33809524",
+      "name": "压缩文件3",
+      "font_class": "yasuowenjian3",
+      "unicode": "e84f",
+      "unicode_decimal": 59471
+    },
+    {
+      "icon_id": "39364042",
+      "name": "代码文件",
+      "font_class": "daimawenjian",
+      "unicode": "1019c",
+      "unicode_decimal": 65948
+    },
+    {
       "icon_id": "29529508",
       "name": "上传&下载",
       "font_class": "a-shangchuanxiazai",

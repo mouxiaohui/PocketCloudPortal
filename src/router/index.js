@@ -20,7 +20,7 @@ const router = createRouter({
         {
           path: 'file',
           name: 'File',
-          component: () => import('@/views/home/file/index.vue'),
+          component: () => import('@/views/file/index.vue'),
           meta: {
             collapse: true,
           },
