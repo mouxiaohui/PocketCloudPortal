@@ -4,13 +4,16 @@
       <navbar />
       <el-container>
         <el-header>Header</el-header>
-        <el-main>Main</el-main>
+        <el-main>
+          <router-view />
+        </el-main>
       </el-container>
     </el-container>
   </div>
 </template>
 
 <script setup>
+import { RouterView } from 'vue-router'
 import Navbar from '@/components/navbar/index.vue'
 </script>
 

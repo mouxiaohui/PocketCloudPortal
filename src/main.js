@@ -9,6 +9,8 @@ import router from './router'
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css' // element-plus暗黑主题
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import './assets/icon/iconfont.css'
+import './assets/icon/iconfont.js'
 
 const app = createApp(App)
 

@@ -10,7 +10,22 @@ const router = createRouter({
       path: '/',
       name: 'Index',
       component: () => import('@/layout/index.vue'),
-      children: [],
+      children: [
+        {
+          path: 'home',
+          name: 'Home',
+          component: () => import('@/views/home/index.vue'),
+          alias: '/', // 置默认子路由
+        },
+        {
+          path: 'file',
+          name: 'File',
+          component: () => import('@/views/home/file/index.vue'),
+          meta: {
+            collapse: true,
+          },
+        },
+      ],
     },
     {
       path: '/auth',

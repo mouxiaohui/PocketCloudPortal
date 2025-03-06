@@ -1,0 +1,23 @@
+{
+  "id": "4848432",
+  "name": "pocket-cloud",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "29529508",
+      "name": "上传&下载",
+      "font_class": "a-shangchuanxiazai",
+      "unicode": "e7cb",
+      "unicode_decimal": 59339
+    },
+    {
+      "icon_id": "61143",
+      "name": "share",
+      "font_class": "share",
+      "unicode": "e6f3",
+      "unicode_decimal": 59123
+    }
+  ]
+}

@@ -16,7 +16,21 @@ html.dark {
 /* 避免 el-tooltip 聚焦时出现默认的蓝色边框 */
 .el-tooltip__trigger:focus-visible {
   outline: unset;
-} 
+}
 .el-tooltip__trigger:first-child:focus-visible {
   outline: unset;
-} 
+}
+
+/* 阿里图标库 */
+.icon {
+  width: 14px;
+  height: 14px;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+.icon-large {
+  width: 24px; /* 大图标 */
+  height: 24px;
+}
