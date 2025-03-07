@@ -37,7 +37,7 @@
 import { ref } from 'vue'
 import useStore from '@/stores'
 
-const { fileStore } = useStore()
+const { fileStore, breadcrumbStore } = useStore()
 
 // 表格高度
 const tableHeight = ref(window.innerHeight - 200)
@@ -58,7 +58,7 @@ const handleSelectionChange = (val) => {
 const clickFilename = (row) => {
   switch (row.fileType) {
     case 0:
-    //   goInFolder(row.fileId)
+      goInFolder(row.filename, row.id)
     case 3:
     case 4:
     case 10:
@@ -73,6 +73,19 @@ const clickFilename = (row) => {
   }
 }
 
+/**
+ * 进入文件夹
+ */
+const goInFolder = (filename, folderId) => {
+  breadcrumbStore.addCrumb(filename, folderId)
+  fileStore.setParentId(folderId)
+  fileStore.loadFileList()
+}
+
+/**
+ * 根据文件类型获取图标
+ * @param fileType 文件类型
+ */
 const getIconFromFileType = (fileType) => {
   switch (fileType) {
     case 0:
