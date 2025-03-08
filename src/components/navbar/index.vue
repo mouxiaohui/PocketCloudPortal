@@ -38,7 +38,7 @@
       <!-- 上传下载按钮 -->
       <div class="flex justify-center items-center mb-6">
         <el-button circle>
-          <svg class="icon" aria-hidden="true">
+          <svg class="ali-icon" aria-hidden="true">
             <use xlink:href="#icon-a-shangchuanxiazai"></use>
           </svg>
         </el-button>
@@ -102,7 +102,7 @@
       <!-- 分享菜单 -->
       <li class="menu-children-item">
         <span class="flex items-center mr-1">
-          <svg class="icon icon-large" aria-hidden="true">
+          <svg class="ali-icon ali-icon-large" aria-hidden="true">
             <use xlink:href="#icon-share"></use>
           </svg>
         </span>
@@ -121,7 +121,6 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { House, Folder, Delete } from '@element-plus/icons-vue'
 import ThemeBtn from '@/components/theme-btn/index.vue'

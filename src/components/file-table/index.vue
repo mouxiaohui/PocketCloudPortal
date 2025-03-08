@@ -17,7 +17,7 @@
           <div @click="clickFilename(scope.row)" class="flex cursor-pointer">
             <!-- 文件图标 -->
             <span class="mr-2">
-              <svg class="icon icon-large" aria-hidden="true">
+              <svg class="ali-icon ali-icon-large" aria-hidden="true">
                 <use :xlink:href="getIconFromFileType(scope.row.fileType)"></use>
               </svg>
             </span>
@@ -40,7 +40,7 @@ import useStore from '@/stores'
 const { fileStore, breadcrumbStore } = useStore()
 
 // 表格高度
-const tableHeight = ref(window.innerHeight - 200)
+const tableHeight = ref(window.innerHeight - 130)
 
 // 选择的文件
 const selectedFiles = ref([])

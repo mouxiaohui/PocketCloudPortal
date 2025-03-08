@@ -22,7 +22,7 @@ html.dark {
 }
 
 /* 阿里图标库 */
-.icon {
+.ali-icon {
   width: 14px;
   height: 14px;
   vertical-align: -0.15em;
@@ -30,7 +30,7 @@ html.dark {
   overflow: hidden;
 }
 
-.icon-large {
+.ali-icon-large {
   width: 24px; /* 大图标 */
   height: 24px;
 }
