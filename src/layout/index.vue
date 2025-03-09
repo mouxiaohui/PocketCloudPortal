@@ -3,7 +3,9 @@
     <el-container class="w-full h-full">
       <navbar />
       <el-container>
-        <el-header>Header</el-header>
+        <el-header>
+          <Header />
+        </el-header>
         <el-main>
           <router-view />
         </el-main>
@@ -15,6 +17,7 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import Navbar from '@/components/navbar/index.vue'
+import Header from '@/components/header/index.vue';
 </script>
 
 <style scoped>
