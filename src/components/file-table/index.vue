@@ -105,6 +105,7 @@ const goInFolder = (filename, folderId) => {
   breadcrumbStore.addCrumb(filename, folderId)
   fileStore.setParentId(folderId)
   fileStore.loadFileList()
+  
 }
 
 /**

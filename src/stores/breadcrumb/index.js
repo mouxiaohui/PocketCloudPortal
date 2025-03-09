@@ -29,9 +29,11 @@ export const useBreadcrumbStore = defineStore('breadcrumb', () => {
 
   // 添加面包屑层级
   const addCrumb = (folderName, folderId) => {
-    if (currentFolderId.value === folderId) {
+    // 判断是否已经进入这个文件夹了
+    if (breadcrumbs.value.find((item) => item.folderId === folderId)) {
       return
     }
+
     breadcrumbs.value.push({ folderName, folderId })
   }
 
