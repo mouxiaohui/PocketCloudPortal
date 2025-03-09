@@ -5,13 +5,13 @@
       <el-button class="floating-btn" color="#4795fc" :icon="Plus" circle />
       <template #dropdown>
         <el-dropdown-menu class="select-none font-extrabold">
-          <el-dropdown-item id="upload-btn" :icon="UploadFilled">
-            <div>文件上传</div>
-          </el-dropdown-item>
-          <el-dropdown-item :icon="FolderAdd">创建文件夹</el-dropdown-item>
+          <el-dropdown-item id="upload-btn" :icon="UploadFilled"> 文件上传 </el-dropdown-item>
+          <el-dropdown-item :icon="FolderAdd" @click="showDialog = true">创建文件夹</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
+
+    <CreateFolderDialog :show-dialog="showDialog" @close-dialog="showDialog = false" />
   </div>
 </template>
 
@@ -26,8 +26,12 @@ import { UPLOAD_FILE_STATUS } from '@/constants/file'
 import { MD5 } from '@/utils/md5'
 import useStore from '@/stores'
 import fileService from '@/api/file'
+import CreateFolderDialog from '@/components/create-folder-dialog/index.vue'
 
 const { fileStore, taskStore } = useStore()
+
+// 控制子组件 Dialog 显示的变量
+const showDialog = ref(false)
 
 let uploader = undefined // 上传器
 
@@ -183,6 +187,7 @@ const fileUploaded = (rootFile, file, message, chunk) => {
   }
 }
 
+// 文件合并处理
 const doMerge = (file) => {
   // console.log(file)
   // return
@@ -235,10 +240,12 @@ const doMerge = (file) => {
   )
 }
 
+// 所有文件上传完成处理
 const uploadComplete = () => {
   console.log('全部完成')
 }
 
+// 文件上传错误处理
 const uploadError = (rootFile, file, message, chunk) => {
   console.log(message)
   // taskStore.updateStatus({
@@ -255,6 +262,7 @@ const uploadError = (rootFile, file, message, chunk) => {
   // })
 }
 
+// 初始化Uploader
 const initUploader = () => {
   // 实例化一个上传对象
   uploader = new Uploader(fileOptions)
