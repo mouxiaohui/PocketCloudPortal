@@ -1,29 +1,13 @@
 # PocketCloudPortal
 
-This template should help get you started developing with Vue 3 in Vite.
+一个网盘系统
+后端:https://github.com/mouxiaohui/PocketCloudServer
+前端:https://github.com/mouxiaohui/PocketCloudPortal
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+## 功能
+- 文件分片上传
+- 文件秒传
+- 文件下载
+- 文件在线预览
+- 文件搜索
+- 文件分享
