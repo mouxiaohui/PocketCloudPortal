@@ -14,14 +14,37 @@
       <!-- 文件名列 -->
       <el-table-column prop="filename" label="文件名" sortable show-overflow-tooltip min-width="750">
         <template #default="scope">
-          <div @click="clickFilename(scope.row)" class="flex cursor-pointer">
-            <!-- 文件图标 -->
-            <span class="mr-2">
-              <svg class="ali-icon ali-icon-large" aria-hidden="true">
-                <use :xlink:href="getIconFromFileType(scope.row.fileType)"></use>
-              </svg>
-            </span>
-            <span>{{ scope.row.filename }}</span>
+          <div class="flex justify-between">
+            <!-- 文件图标和文件名 -->
+            <div @click="clickFilename(scope.row)" class="flex cursor-pointer">
+              <span class="mr-2">
+                <svg class="ali-icon ali-icon-large" aria-hidden="true">
+                  <use :xlink:href="getIconFromFileType(scope.row.fileType)"></use>
+                </svg>
+              </span>
+              <span>{{ scope.row.filename }}</span>
+            </div>
+            <!-- 文件操作下拉菜单 -->
+            <div class="file-operation w-6 h-6 cursor-pointer flex items-center justify-center rounded-md">
+              <el-dropdown trigger="click">
+                <span class="flex items-center justify-center w-full h-full">
+                  <el-icon><MoreFilled /></el-icon>
+                </span>
+                <template #dropdown>
+                  <el-dropdown-menu>
+                    <el-dropdown-item>分享</el-dropdown-item>
+                    <el-dropdown-item>下载</el-dropdown-item>
+                    <el-dropdown-item>收藏</el-dropdown-item>
+                    <el-divider />
+                    <rename-operation :item="scope.row" />
+                    <el-dropdown-item>移动</el-dropdown-item>
+                    <el-dropdown-item>查看详细信息</el-dropdown-item>
+                    <el-divider />
+                    <el-dropdown-item>放入回收站</el-dropdown-item>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
+            </div>
           </div>
         </template>
       </el-table-column>
@@ -36,6 +59,8 @@
 <script setup>
 import { ref } from 'vue'
 import useStore from '@/stores'
+import { MoreFilled } from '@element-plus/icons-vue'
+import RenameOperation from '@/components/file-operation/rename-operation/index.vue';
 
 const { fileStore, breadcrumbStore } = useStore()
 
@@ -120,4 +145,12 @@ const getIconFromFileType = (fileType) => {
 }
 </script>
 
-<style></style>
+<style scoped>
+:deep(.el-divider) {
+  margin: 2px 0;
+}
+
+.file-operation:hover {
+  background-color: var(--custom-btn-hover-bg);
+}
+</style>

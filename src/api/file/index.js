@@ -25,6 +25,15 @@ let fileService = {
       .then((res) => resolve(res))
       .catch((err) => reject(err))
   },
+  update: function (data, resolve, reject) {
+    http({
+      url: '/file',
+      data: data,
+      method: 'put',
+    })
+      .then((res) => resolve(res))
+      .catch((err) => reject(err))
+  },
   secUpload: function (data, resolve, reject) {
     http({
       url: '/file/sec-upload',

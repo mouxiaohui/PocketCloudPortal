@@ -2,12 +2,11 @@
   <el-dialog
     v-model="localShowDialog"
     title="文件夹名称"
-    width="300"
-    align-center
+    width="30%"
     :show-close="false"
     :close-on-click-modal="false"
   >
-    <el-form :model="form" :rules="rules" ref="formRef">
+    <el-form :model="form" :rules="rules" ref="formRef" class="flex flex-col items-center justify-center">
       <el-form-item prop="folderName">
         <div class="flex items-center">
           <span class="mr-2">
