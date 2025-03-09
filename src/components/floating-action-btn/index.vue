@@ -31,24 +31,46 @@ const { fileStore, taskStore } = useStore()
 
 let uploader = undefined // 上传器
 
+// 详细文档地址：https://github.com/simple-uploader/Uploader/blob/develop/README_zh-CN.md#%E9%85%8D%E7%BD%AE
 const fileOptions = {
   target: function (file, chunk) {
-    return import.meta.env.VITE_BASE_URL_API + '/file/upload'
+    // return import.meta.env.VITE_BASE_URL_API + '/file/upload'
+    return import.meta.env.VITE_BASE_URL_API + '/file/chunk-upload'
   }, // 上传地址
   singleFile: false, // 可以多文件上传
   fileParameterName: 'file', // 文件参数名
+  // chunkSize: 1048576, // 默认 1*1024*1024
+  forceChunkSize: false,
+  fileParameterName: 'file',
   headers: {
-    Authorization: getToken(),
+    Authorization: `Bearer ` + getToken(),
   },
   query: function (file, chunk) {
     return { parentId: fileStore.parentId }
   },
+  checkChunkUploadedByResponse: function (chunk, message) {
+    let objMessage = {}
+    try {
+      objMessage = JSON.parse(message)
+    } catch (e) {}
+    if (objMessage.data) {
+      return (objMessage.data.uploadedChunks || []).indexOf(chunk.offset + 1) >= 0
+    }
+
+    return true
+  },
+  maxChunkRetries: 0,
+  chunkRetryInterval: null,
+  progressCallbacksInterval: 500,
+  successStatuses: [200, 201, 202],
+  permanentErrors: [404, 415, 500, 501],
+  initialPaused: false,
 }
 
 // 文件添加时的处理
 const filesAdded = (file, event) => {
   try {
-    if (file.size > import.meta.env.VITE_MAX_FILE_SIZE) {
+    if (file.size > 10737418240) {
       throw new Error('文件：' + file.name + '大小超过了最大上传文件的限制(' + import.meta.env.VITE_MAX_FILE_SIZE + ')')
     }
     // 添加任务
@@ -104,6 +126,135 @@ const filesAdded = (file, event) => {
   return true
 }
 
+const uploadProgress = (rootFile, file, chunk) => {
+  // let uploadTaskItem = taskStore.getUploadTask(file.name)
+  // if (file.isUploading()) {
+  //   if (uploadTaskItem.status !== panUtil.fileStatus.UPLOADING.code) {
+  //     taskStore.updateStatus({
+  //       filename: file.name,
+  //       status: panUtil.fileStatus.UPLOADING.code,
+  //       statusText: panUtil.fileStatus.UPLOADING.text,
+  //     })
+  //   }
+  //   taskStore.updateProcess({
+  //     filename: file.name,
+  //     speed: panUtil.translateSpeed(file.averageSpeed),
+  //     percentage: Math.floor(file.progress() * 100),
+  //     uploadedSize: panUtil.translateFileSize(file.sizeUploaded()),
+  //     timeRemaining: panUtil.translateTime(file.timeRemaining()),
+  //   })
+  // }
+}
+
+// 文件上传成功后的处理
+const fileUploaded = (rootFile, file, message, chunk) => {
+  let res = {}
+  try {
+    res = JSON.parse(message)
+  } catch (e) {}
+  if (res.code === '00000') {
+    if (res.data) {
+      if (res.data.mergeFlag) {
+        doMerge(file)
+      } else if (res.data.uploadedChunks && res.data.uploadedChunks.length === file.chunks.length) {
+        doMerge(file)
+      }
+    } else {
+      ElMessage.success('文件：' + file.name + ' 上传完成')
+      uploader.removeFile(file)
+      // fileStore.loadFileList()
+      // taskStore.updateStatus({
+      //   filename: file.name,
+      //   status: panUtil.fileStatus.SUCCESS.code,
+      //   statusText: panUtil.fileStatus.SUCCESS.text,
+      // })
+      // taskStore.remove(file.name)
+      // if (uploader.files.length === 0) {
+      //   taskStore.updateViewFlag(false)
+      // }
+    }
+  } else {
+    file.pause()
+    // taskStore.updateStatus({
+    //   filename: file.name,
+    //   status: panUtil.fileStatus.FAIL.code,
+    //   statusText: panUtil.fileStatus.FAIL.text,
+    // })
+  }
+}
+
+const doMerge = (file) => {
+  // console.log(file)
+  // return
+  // let uploadTaskItem = taskStore.getUploadTask(file.name)
+  // taskStore.updateStatus({
+  //   filename: file.name,
+  //   status: panUtil.fileStatus.MERGE.code,
+  //   statusText: panUtil.fileStatus.MERGE.text,
+  // })
+  // taskStore.updateProcess({
+  //   filename: file.name,
+  //   speed: panUtil.translateSpeed(file.averageSpeed),
+  //   percentage: 99,
+  //   uploadedSize: panUtil.translateFileSize(file.sizeUploaded()),
+  //   timeRemaining: panUtil.translateTime(file.timeRemaining()),
+  // })
+  fileService.merge(
+    {
+      // filename: uploadTaskItem.filename,
+      // identifier: uploadTaskItem.target.uniqueIdentifier,
+      // parentId: uploadTaskItem.parentId,
+      // totalSize: uploadTaskItem.target.size,
+      filename: file.name,
+      identifier: file['uniqueIdentifier'],
+      parentId: fileStore.parentId,
+      totalSize: file.file.size,
+    },
+    (res) => {
+      ElMessage.success('文件：' + file.name + ' 上传完成')
+      uploader.removeFile(file)
+      fileStore.loadFileList()
+      // taskStore.updateStatus({
+      //   filename: file.name,
+      //   status: panUtil.fileStatus.SUCCESS.code,
+      //   statusText: panUtil.fileStatus.SUCCESS.text,
+      // })
+      // taskStore.remove(file.name)
+      // if (uploader.files.length === 0) {
+      //   taskStore.updateViewFlag(false)
+      // }
+    },
+    (res) => {
+      file.pause()
+      // taskStore.updateStatus({
+      //   filename: file.name,
+      //   status: panUtil.fileStatus.FAIL.code,
+      //   statusText: panUtil.fileStatus.FAIL.text,
+      // })
+    }
+  )
+}
+
+const uploadComplete = () => {
+  console.log('全部完成')
+}
+
+const uploadError = (rootFile, file, message, chunk) => {
+  console.log(message)
+  // taskStore.updateStatus({
+  //     filename: file.name,
+  //     status: panUtil.fileStatus.FAIL.code,
+  //     statusText: panUtil.fileStatus.FAIL.text
+  // })
+  // taskStore.updateProcess({
+  //     filename: file.name,
+  //     speed: panUtil.translateSpeed(0),
+  //     percentage: 0,
+  //     uploadedSize: panUtil.translateFileSize(0),
+  //     timeRemaining: panUtil.translateTime(Number.POSITIVE_INFINITY)
+  // })
+}
+
 const initUploader = () => {
   // 实例化一个上传对象
   uploader = new Uploader(fileOptions)
@@ -116,14 +267,14 @@ const initUploader = () => {
 
   // 文件添加
   uploader.on('fileAdded', filesAdded)
-  // 单个文件上传成功
-  uploader.on('fileSuccess', function (rootFile, file, message) {
-    // console.log(rootFile, file, message)
-  })
-  // 某个文件上传失败了
-  uploader.on('fileError', function (rootFile, file, message) {
-    // console.log(rootFile, file, message)
-  })
+  // 绑定进度
+  uploader.on('fileProgress', uploadProgress)
+  // 上传成功监听
+  uploader.on('fileSuccess', fileUploaded)
+  // 上传全部完成调用
+  uploader.on('complete', uploadComplete)
+  // 上传出错调用
+  uploader.on('fileError', uploadError)
 }
 
 onMounted(() => {

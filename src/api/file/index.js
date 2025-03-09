@@ -25,6 +25,15 @@ let fileService = {
       .then((res) => resolve(res))
       .catch((err) => reject(err))
   },
+  merge: function (data, resolve, reject) {
+    http({
+      url: '/file/merge',
+      data: data,
+      method: 'post',
+    })
+      .then((res) => resolve(res))
+      .catch((err) => reject(err))
+  },
 }
 
 export default fileService
