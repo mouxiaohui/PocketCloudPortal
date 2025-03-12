@@ -23,6 +23,8 @@ export const useFileStore = defineStore(
     const fileTypes = ref(-1)
     // 文件列表加载中
     const tableLoading = ref(true)
+    // 多选的文件列表
+    const multipleSelection = ref([])
 
     function setRootFileId(newRootFileId) {
       rootFileId.value = newRootFileId
@@ -42,6 +44,10 @@ export const useFileStore = defineStore(
     function setTableLoading(newTableLoading) {
       tableLoading.value = newTableLoading
     }
+
+    function setMultipleSelection(newMultipleSelection) {
+      multipleSelection.value = newMultipleSelection
+  }
 
     function clear() {
       rootFileId.value = ''
@@ -76,12 +82,14 @@ export const useFileStore = defineStore(
       fileList,
       fileTypes,
       tableLoading,
+      multipleSelection,
       setRootFileId,
       setRootFilename,
       setParentId,
       setTableLoading,
       clear,
       loadFileList,
+      setMultipleSelection
     }
   },
   {

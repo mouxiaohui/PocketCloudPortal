@@ -52,6 +52,24 @@ let fileService = {
       .then((res) => resolve(res))
       .catch((err) => reject(err))
   },
+  delete: function (data, resolve, reject) {
+    http({
+      url: '/file',
+      data: data,
+      method: 'delete',
+    })
+      .then((res) => resolve(res))
+      .catch((err) => reject(err))
+  },
+  search: function (params, resolve, reject) {
+    http({
+      url: '/file/search',
+      params: params,
+      method: 'get',
+    })
+      .then((res) => resolve(res))
+      .catch((err) => reject(err))
+  },
 }
 
 export default fileService

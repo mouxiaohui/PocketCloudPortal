@@ -43,11 +43,11 @@ const fileOptions = {
   }, // 上传地址
   singleFile: false, // 可以多文件上传
   fileParameterName: 'file', // 文件参数名
-  // chunkSize: 1048576, // 默认 1*1024*1024
+  chunkSize: Number(import.meta.env.VITE_CHUNK_SIZE), // 默认 1*1024*1024
   forceChunkSize: false,
   fileParameterName: 'file',
   headers: {
-    Authorization: `Bearer ` + getToken(),
+    Authorization: getToken(),
   },
   query: function (file, chunk) {
     return { parentId: fileStore.parentId }
@@ -74,7 +74,7 @@ const fileOptions = {
 // 文件添加时的处理
 const filesAdded = (file, event) => {
   try {
-    if (file.size > 10737418240) {
+    if (file.size > Number(import.meta.env.VITE_MAX_FILE_SIZE)) {
       throw new Error('文件：' + file.name + '大小超过了最大上传文件的限制(' + import.meta.env.VITE_MAX_FILE_SIZE + ')')
     }
     // 添加任务

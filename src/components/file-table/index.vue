@@ -33,7 +33,7 @@
                 <template #dropdown>
                   <el-dropdown-menu>
                     <el-dropdown-item>分享</el-dropdown-item>
-                    <el-dropdown-item>下载</el-dropdown-item>
+                    <download-operation :item="scope.row" />
                     <el-dropdown-item>收藏</el-dropdown-item>
                     <el-divider />
                     <rename-operation :item="scope.row" />
@@ -61,20 +61,18 @@ import { ref } from 'vue'
 import useStore from '@/stores'
 import { MoreFilled } from '@element-plus/icons-vue'
 import RenameOperation from '@/components/file-operation/rename-operation/index.vue';
+import DownloadOperation from '@/components/file-operation/download-operation/index.vue';
 
 const { fileStore, breadcrumbStore } = useStore()
 
 // 表格高度
 const tableHeight = ref(window.innerHeight - 130)
 
-// 选择的文件
-const selectedFiles = ref([])
-
 /**
  * 处理文件选中事件
  */
-const handleSelectionChange = (val) => {
-  selectedFiles.value = val
+const handleSelectionChange = (multipleSelection) => {
+  fileStore.setMultipleSelection(multipleSelection)
 }
 
 /**

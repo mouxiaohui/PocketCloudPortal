@@ -16,7 +16,7 @@ export function setToken(token) {
 export function getToken() {
   let token = cookie.get(LOGIN_TOKEN)
   if (token) {
-    return token
+    return `Bearer ` + token
   }
   return EMPTY_STR
 }
