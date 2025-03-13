@@ -1,5 +1,7 @@
 <template>
-  <el-dropdown-item @click="renameDialogVisible = true">重命名</el-dropdown-item>
+  <div @click="renameDialogVisible = true">
+    <slot></slot>
+  </div>
   <el-dialog
     title="文件重命名"
     v-model="renameDialogVisible"

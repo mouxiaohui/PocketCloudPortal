@@ -1,21 +1,22 @@
 <template>
-  <el-dropdown-item @click="downloadFile">下载</el-dropdown-item>
+  <div class="w-full h-full" @click="downloadFile">
+    <slot></slot>
+  </div>
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue'
+import { defineProps } from 'vue'
 import { getToken } from '@/utils/cookie'
 import useStore from '@/stores'
 import { ElMessage } from 'element-plus'
-import { storeToRefs } from 'pinia'
 
 const { fileStore } = useStore()
-const { multipleSelection } = storeToRefs(fileStore)
 
 const props = defineProps({
   item: {
     type: Object,
-    default: false,
+    required: false,
+    default: undefined,
   },
 })
 
@@ -54,26 +55,24 @@ const doDownLoads = (items, i) => {
 
 // 下载操作
 const downloadFile = () => {
-  if (!props.item && (!multipleSelection.value || multipleSelection.value.length === 0)) {
-    ElMessage.error('请选择要下载的文件')
-    return
-  }
-
   if (props.item) {
     if (props.item.folderFlag === 1) {
       ElMessage.error('文件夹暂不支持下载')
       return
     }
+
     doDownload(props.item)
-  } else {
-    for (const file in multipleSelection.value) {
-      if (file.folderFlag === 1) {
+  } else if (fileStore.multipleSelection.length > 0) {
+    for (let i = 0, len = fileStore.multipleSelection.length; i < len; i++) {
+      if (fileStore.multipleSelection[i].folderFlag === 1) {
         ElMessage.error('文件夹暂不支持下载')
         return
       }
     }
 
-    doDownLoads(multipleSelection.value)
+    doDownLoads(fileStore.multipleSelection)
+  } else {
+    ElMessage.error('请选择要下载的文件')
   }
 }
 </script>

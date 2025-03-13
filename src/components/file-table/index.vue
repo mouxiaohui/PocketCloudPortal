@@ -25,26 +25,36 @@
               <span>{{ scope.row.filename }}</span>
             </div>
             <!-- 文件操作下拉菜单 -->
-            <div class="file-operation w-6 h-6 cursor-pointer flex items-center justify-center rounded-md">
-              <el-dropdown trigger="click">
-                <span class="flex items-center justify-center w-full h-full">
-                  <el-icon><MoreFilled /></el-icon>
-                </span>
-                <template #dropdown>
-                  <el-dropdown-menu>
-                    <el-dropdown-item>分享</el-dropdown-item>
-                    <download-operation :item="scope.row" />
-                    <el-dropdown-item>收藏</el-dropdown-item>
-                    <el-divider />
-                    <rename-operation :item="scope.row" />
-                    <el-dropdown-item>移动</el-dropdown-item>
-                    <el-dropdown-item>查看详细信息</el-dropdown-item>
-                    <el-divider />
-                    <el-dropdown-item>放入回收站</el-dropdown-item>
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>
-            </div>
+            <el-dropdown trigger="click">
+              <span class="file-operation w-6 h-6 cursor-pointer flex items-center justify-center rounded-md">
+                <el-icon><MoreFilled /></el-icon>
+              </span>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item>分享</el-dropdown-item>
+
+                  <download-operation :item="scope.row">
+                    <el-dropdown-item>下载</el-dropdown-item>
+                  </download-operation>
+
+                  <el-dropdown-item>收藏</el-dropdown-item>
+
+                  <el-divider />
+
+                  <rename-operation :item="scope.row">
+                    <el-dropdown-item>重命名</el-dropdown-item>
+                  </rename-operation>
+
+                  <el-dropdown-item>移动</el-dropdown-item>
+
+                  <el-dropdown-item>查看详细信息</el-dropdown-item>
+
+                  <el-divider />
+
+                  <el-dropdown-item>放入回收站</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
           </div>
         </template>
       </el-table-column>
@@ -54,25 +64,41 @@
       <el-table-column prop="fileSizeDesc" sortable label="大小" min-width="120" align="center"> </el-table-column>
     </el-table>
   </div>
+
+  <all-operation />
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import useStore from '@/stores'
 import { MoreFilled } from '@element-plus/icons-vue'
-import RenameOperation from '@/components/file-operation/rename-operation/index.vue';
-import DownloadOperation from '@/components/file-operation/download-operation/index.vue';
+import RenameOperation from '@/components/file-operation/rename-operation/index.vue'
+import DownloadOperation from '@/components/file-operation/download-operation/index.vue'
+import AllOperation from '@/components/file-operation/all-operation/index.vue'
+import { storeToRefs } from 'pinia'
 
 const { fileStore, breadcrumbStore } = useStore()
+
+const { multipleSelection } = storeToRefs(fileStore)
 
 // 表格高度
 const tableHeight = ref(window.innerHeight - 130)
 
+// 表格ref
+const fileTableRef = ref()
+
+// 如果表格没有选中项，则清空多选
+watch(multipleSelection, (newValue, oldValue) => {
+  if (newValue.length === 0) {
+    fileTableRef.value.clearSelection()
+  }
+})
+
 /**
  * 处理文件选中事件
  */
-const handleSelectionChange = (multipleSelection) => {
-  fileStore.setMultipleSelection(multipleSelection)
+const handleSelectionChange = (val) => {
+  fileStore.setMultipleSelection(val)
 }
 
 /**
@@ -103,7 +129,6 @@ const goInFolder = (filename, folderId) => {
   breadcrumbStore.addCrumb(filename, folderId)
   fileStore.setParentId(folderId)
   fileStore.loadFileList()
-  
 }
 
 /**

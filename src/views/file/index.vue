@@ -15,8 +15,7 @@ import FloatingActionBtn from '@/components/floating-action-btn/index.vue'
 
 const { fileStore, breadcrumbStore } = useStore()
 
-onMounted(() => {
-  fileStore.loadFileList()
-  breadcrumbStore.addCrumb(fileStore.rootFilename, fileStore.rootFileId)
-})
+fileStore.loadFileList()
+fileStore.setMultipleSelection([])
+breadcrumbStore.addCrumb(fileStore.rootFilename, fileStore.rootFileId)
 </script>

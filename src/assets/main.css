@@ -6,11 +6,13 @@
 html.light {
   --custom-main-aside-bg: #f3f3f3; /* 自定义侧边栏背景色 */
   --custom-btn-hover-bg: #dbdbdb; /* 自定义按钮hover背景 */
+  --custom-all-operation-bg: #f6f6f6; /* 自定义所有操作按钮的背景色 */
 }
 
 html.dark {
   --custom-main-aside-bg: #222226; /* 自定义侧边栏背景色 */
-  --custom-btn-hover-bg: #2b2b2e; /* 自定义按钮hover背景 */
+  --custom-btn-hover-bg: #38383b; /* 自定义按钮hover背景 */
+  --custom-all-operation-bg: #242429; /* 自定义所有操作按钮的背景色 */
 }
 
 /* 避免 el-tooltip 聚焦时出现默认的蓝色边框 */
