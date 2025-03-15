@@ -27,41 +27,7 @@
               <span>{{ scope.row.filename }}</span>
             </div>
             <!-- 文件操作下拉菜单 -->
-            <el-dropdown trigger="click">
-              <div>
-                <span
-                  style="display: none"
-                  class="file-operation w-6 h-6 cursor-pointer flex items-center justify-center rounded-md"
-                >
-                  <el-icon><MoreFilled /></el-icon>
-                </span>
-              </div>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item>分享</el-dropdown-item>
-
-                  <download-operation :item="scope.row">
-                    <el-dropdown-item>下载</el-dropdown-item>
-                  </download-operation>
-
-                  <el-dropdown-item>收藏</el-dropdown-item>
-
-                  <el-divider />
-
-                  <rename-operation :item="scope.row">
-                    <el-dropdown-item>重命名</el-dropdown-item>
-                  </rename-operation>
-
-                  <el-dropdown-item>移动</el-dropdown-item>
-
-                  <el-dropdown-item>查看详细信息</el-dropdown-item>
-
-                  <el-divider />
-
-                  <el-dropdown-item>放入回收站</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
+            <async-dropdown-menu :row="scope.row"></async-dropdown-menu>
           </div>
         </template>
       </el-table-column>
@@ -76,13 +42,15 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, defineAsyncComponent  } from 'vue'
 import useStore from '@/stores'
-import { MoreFilled } from '@element-plus/icons-vue'
-import RenameOperation from '@/components/file-operation/rename-operation/index.vue'
-import DownloadOperation from '@/components/file-operation/download-operation/index.vue'
 import AllOperation from '@/components/file-operation/all-operation/index.vue'
 import { storeToRefs } from 'pinia'
+
+// 利用defineAsyncComponent延迟加载复杂组件 
+const AsyncDropdownMenu = defineAsyncComponent(() =>
+  import('@/components/async-dropdown-menu/index.vue')
+)
 
 const { fileStore, breadcrumbStore } = useStore()
 
@@ -201,11 +169,4 @@ const getIconFromFileType = (fileType) => {
 </script>
 
 <style scoped>
-:deep(.el-divider) {
-  margin: 2px 0;
-}
-
-.file-operation:hover {
-  background-color: var(--custom-btn-hover-bg);
-}
 </style>

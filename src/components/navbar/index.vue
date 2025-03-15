@@ -66,36 +66,50 @@
   <!-- 子菜单栏 -->
   <el-aside width="170px" v-show="router.currentRoute.value.meta.collapse" class="border-right-gray p-4">
     <ul class="flex flex-col items-center justify-center">
-      <li class="menu-children-item" :class="curRouteName === 'AllFile' ? 'curMenuBg' : ''">
-        <span class="flex items-center mr-1">
-          <el-icon size="24"><Folder /></el-icon>
-        </span>
-        <span>{{ fileStore.rootFilename }}</span>
-      </li>
-      <li class="menu-children-item" :class="curRouteName === 'ImageFile' ? 'curMenuBg' : ''">
-        <span class="flex items-center mr-1 w-6 h-6">
-          <!-- icon占位 -->
-        </span>
-        <span>图片</span>
-      </li>
-      <li class="menu-children-item" :class="curRouteName === 'VideoFile' ? 'curMenuBg' : ''">
-        <span class="flex items-center mr-1 w-6 h-6">
-          <!-- icon占位 -->
-        </span>
-        <span>视频</span>
-      </li>
-      <li class="menu-children-item" :class="curRouteName === 'DocFile' ? 'curMenuBg' : ''">
-        <span class="flex items-center mr-1 w-6 h-6">
-          <!-- icon占位 -->
-        </span>
-        <span>文档</span>
-      </li>
-      <li class="menu-children-item" :class="curRouteName === 'MusicFile' ? 'curMenuBg' : ''">
-        <span class="flex items-center mr-1 w-6 h-6">
-          <!-- icon占位 -->
-        </span>
-        <span>音乐</span>
-      </li>
+      <router-link to="/file/all">
+        <li class="menu-children-item" :class="curRouteName === 'AllFile' ? 'curMenuBg' : ''">
+          <span class="flex items-center mr-1">
+            <el-icon size="24"><Folder /></el-icon>
+          </span>
+          <span>{{ fileStore.rootFilename }}</span>
+        </li>
+      </router-link>
+
+      <router-link to="/file/image">
+        <li class="menu-children-item" :class="curRouteName === 'ImageFile' ? 'curMenuBg' : ''">
+          <span class="flex items-center mr-1 w-6 h-6">
+            <!-- icon占位 -->
+          </span>
+          <span>图片</span>
+        </li>
+      </router-link>
+
+      <router-link to="/file/video">
+        <li class="menu-children-item" :class="curRouteName === 'VideoFile' ? 'curMenuBg' : ''">
+          <span class="flex items-center mr-1 w-6 h-6">
+            <!-- icon占位 -->
+          </span>
+          <span>视频</span>
+        </li>
+      </router-link>
+
+      <router-link to="/file/doc">
+        <li class="menu-children-item" :class="curRouteName === 'DocFile' ? 'curMenuBg' : ''">
+          <span class="flex items-center mr-1 w-6 h-6">
+            <!-- icon占位 -->
+          </span>
+          <span>文档</span>
+        </li>
+      </router-link>
+
+      <router-link to="/file/music">
+        <li class="menu-children-item" :class="curRouteName === 'MusicFile' ? 'curMenuBg' : ''">
+          <span class="flex items-center mr-1 w-6 h-6">
+            <!-- icon占位 -->
+          </span>
+          <span>音乐</span>
+        </li>
+      </router-link>
 
       <el-divider />
 
@@ -130,7 +144,6 @@ import { clearToken } from '@/utils/cookie'
 
 const router = useRouter()
 const { userStore, fileStore } = useStore()
-console.log(router.currentRoute.value)
 
 // 当前路由名称
 const curRouteName = computed(() => router.currentRoute.value.name)

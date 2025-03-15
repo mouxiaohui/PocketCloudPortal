@@ -31,6 +31,26 @@ const router = createRouter({
               component: () => import('@/views/file/all-file/index.vue'),
               alias: '/file',
             },
+            {
+              path: 'image',
+              name: 'ImageFile',
+              component: () => import('@/views/file/image-file/index.vue'),
+            },
+            {
+              path: 'doc',
+              name: 'DocFile',
+              component: () => import('@/views/file/doc-file/index.vue'),
+            },
+            {
+              path: 'video',
+              name: 'VideoFile',
+              component: () => import('@/views/file/video-file/index.vue'),
+            },
+            {
+              path: 'music',
+              name: 'MusicFile',
+              component: () => import('@/views/file/music-file/index.vue'),
+            },
           ],
         },
       ],

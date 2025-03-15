@@ -116,7 +116,7 @@ const handleLogin = async () => {
         )
 
         // 跳转首页
-        router.push({ name: 'Index' })
+        router.push({ name: 'Home' })
       },
       (res) => {
         ElMessage.error(res.msg)

@@ -19,12 +19,19 @@ export const useFileStore = defineStore(
     const parentId = ref('')
     // 文件列表
     const fileList = ref([])
-    // 文件类型（1 普通文件 2 压缩文件 3 excel 4 word 5 pdf 6 txt 7 图片 8 音频 9 视频 10 ppt 11 源码文件 12 csv）
-    const fileTypes = ref(-1)
+
     // 文件列表加载中
     const tableLoading = ref(true)
     // 多选的文件列表
     const multipleSelection = ref([])
+
+    // 文件类型（1 普通文件 2 压缩文件 3 excel 4 word 5 pdf 6 txt 7 图片 8 音频 9 视频 10 ppt 11 源码文件 12 csv）
+    const fileTypes = ref(-1)
+
+    // 搜索标志
+    const searchFlag = ref(false)
+    // 搜索关键字
+    const searchKey = ref('')
 
     function setRootFileId(newRootFileId) {
       rootFileId.value = newRootFileId
@@ -45,8 +52,23 @@ export const useFileStore = defineStore(
       tableLoading.value = newTableLoading
     }
 
+    function setFileTypes(newFileType) {
+      fileTypes.value = newFileType
+    }
+
     function setMultipleSelection(newMultipleSelection) {
       multipleSelection.value = newMultipleSelection
+    }
+
+    function setSearchFlag(newSearchFlag) {
+      if (!newSearchFlag) {
+        searchKey.value = ''
+      }
+      searchFlag.value = newSearchFlag
+    }
+
+    function setSearchKey(newSearchKey) {
+      searchKey.value = newSearchKey
     }
 
     function clear() {
@@ -83,6 +105,8 @@ export const useFileStore = defineStore(
       fileTypes,
       tableLoading,
       multipleSelection,
+      searchFlag,
+      searchKey,
       setRootFileId,
       setRootFilename,
       setParentId,
@@ -90,9 +114,14 @@ export const useFileStore = defineStore(
       clear,
       loadFileList,
       setMultipleSelection,
+      setSearchFlag,
+      setSearchKey,
+      setFileTypes,
     }
   },
   {
-    persist: true,
+    persist: {
+      pick: ['rootFileId', 'rootFilename'], // 指定需要持久化的状态路径
+    },
   }
 )
