@@ -9,13 +9,17 @@ import { defineStore } from 'pinia'
 
 export const useBreadcrumbStore = defineStore('breadcrumb', () => {
   // 面包屑最大展示个数
-  const MAX_BREADCRUMBS = 5
+  const MAX_BREADCRUMBS = 6
   // 面包屑数据格式：{ folderName: '文件夹名', folderId: '文件夹ID' }
   const breadcrumbs = ref([])
 
   const getBreadcrumbs = computed(() => {
     if (breadcrumbs.value.length > MAX_BREADCRUMBS) {
-      return [breadcrumbs.value[0], { folderName: '...', folderId: null }, ...breadcrumbs.value.slice(-3)]
+      return [
+        breadcrumbs.value[0],
+        { folderName: '...', folderId: null },
+        ...breadcrumbs.value.slice(-(MAX_BREADCRUMBS - 2)),
+      ]
     }
 
     return breadcrumbs.value
@@ -40,6 +44,13 @@ export const useBreadcrumbStore = defineStore('breadcrumb', () => {
   // 点击面包屑导航
   const navigateToCrumb = (index) => {
     if (index + 1 >= breadcrumbs.value.length) return false
+    const len = breadcrumbs.value.length
+    // 如果面包屑个数大于最大个数，则需要跳过一些面包屑 (被隐藏的 = 当前面包屑长度 - 最大个数)
+    if (len > MAX_BREADCRUMBS) {
+      if (index > 1) {
+        index = index + (len - MAX_BREADCRUMBS)
+      }
+    }
     breadcrumbs.value = breadcrumbs.value.slice(0, index + 1)
     return true
   }
