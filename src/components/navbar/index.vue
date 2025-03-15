@@ -22,12 +22,12 @@
 
           <!-- 文件菜单 -->
           <router-link to="/file">
-            <li class="menu-item">
-              <span>
-                <el-icon size="24"><Folder /></el-icon>
-              </span>
-              <span>文件</span>
-            </li>
+          <li class="menu-item">
+            <span>
+              <el-icon size="24"><Folder /></el-icon>
+            </span>
+            <span>文件</span>
+          </li>
           </router-link>
         </ul>
       </div>

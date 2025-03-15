@@ -4,7 +4,7 @@
       <div v-if="shouldShow" class="operations-content select-none flex items-center justify-center space-x-4">
         <!-- 下载操作 -->
         <div class="operation">
-          <el-tooltip content="下载" effect="light" placement="top" hide-after="0">
+          <el-tooltip content="下载" effect="light" placement="top" :hide-after="0">
             <download-operation>
               <div class="w-full h-full flex items-center justify-center">
                 <el-icon><Download /></el-icon>
@@ -13,21 +13,21 @@
           </el-tooltip>
         </div>
         <div class="operation">
-          <el-tooltip content="分享" effect="light" placement="top" hide-after="0">
+          <el-tooltip content="分享" effect="light" placement="top" :hide-after="0">
             <div class="w-full h-full flex items-center justify-center">
               <el-icon><Share /></el-icon>
             </div>
           </el-tooltip>
         </div>
         <div class="operation">
-          <el-tooltip content="放入回收站" effect="light" placement="top" hide-after="0">
+          <el-tooltip content="放入回收站" effect="light" placement="top" :hide-after="0">
             <div class="w-full h-full flex items-center justify-center">
               <el-icon><Delete /></el-icon>
             </div>
           </el-tooltip>
         </div>
         <div class="operation" @click="cancelMulSelect">
-          <el-tooltip content="取消多选" effect="light" placement="top" hide-after="0">
+          <el-tooltip content="取消多选" effect="light" placement="top" :hide-after="0">
             <div class="w-full h-full flex items-center justify-center">
               <el-icon><CircleCloseFilled /></el-icon>
             </div>
@@ -39,8 +39,7 @@
 </template>
 
 <script setup>
-// 保持原有逻辑不变
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import useStore from '@/stores'
 import { storeToRefs } from 'pinia'
 import { Download, Share, CircleCloseFilled, Delete } from '@element-plus/icons-vue'

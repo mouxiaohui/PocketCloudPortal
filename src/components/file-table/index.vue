@@ -8,6 +8,8 @@
       :row-style="{ height: '45px' }"
       ref="fileTableRef"
       @selection-change="handleSelectionChange"
+      @cell-mouse-enter="showOperation"
+      @cell-mouse-leave="hiddenOperation"
     >
       <!-- 选择框 -->
       <el-table-column type="selection" width="55"> </el-table-column>
@@ -26,9 +28,14 @@
             </div>
             <!-- 文件操作下拉菜单 -->
             <el-dropdown trigger="click">
-              <span class="file-operation w-6 h-6 cursor-pointer flex items-center justify-center rounded-md">
-                <el-icon><MoreFilled /></el-icon>
-              </span>
+              <div>
+                <span
+                  style="display: none"
+                  class="file-operation w-6 h-6 cursor-pointer flex items-center justify-center rounded-md"
+                >
+                  <el-icon><MoreFilled /></el-icon>
+                </span>
+              </div>
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item>分享</el-dropdown-item>
@@ -87,12 +94,36 @@ const tableHeight = ref(window.innerHeight - 130)
 // 表格ref
 const fileTableRef = ref()
 
+// 固定文件操作按钮让其不消失
+let fixedFileOperation = {}
+
 // 如果表格没有选中项，则清空多选
 watch(multipleSelection, (newValue, oldValue) => {
-  if (newValue.length === 0) {
+  if (newValue.length === 0 && newValue.length !== oldValue.length) {
     fileTableRef.value.clearSelection()
   }
 })
+
+// 选取下拉菜单按钮的span dom，控制其显示和隐藏
+const setFileOperationDomDisplay = (dom, display) => {
+  let parentDiv = dom.firstElementChild
+  if (parentDiv && parentDiv.classList.contains('el-tooltip')) {
+    let target = parentDiv.firstElementChild.children[1].firstElementChild.firstElementChild
+    if (target && target.classList.contains('file-operation')) {
+      target.style.display = display
+    }
+  }
+}
+
+// 显示操作按钮
+const showOperation = (row, column, cell, event) => {
+  setFileOperationDomDisplay(cell, '')
+}
+
+// 隐藏操作按钮
+const hiddenOperation = (row, column, cell, event) => {
+  setFileOperationDomDisplay(cell, 'none')
+}
 
 /**
  * 处理文件选中事件

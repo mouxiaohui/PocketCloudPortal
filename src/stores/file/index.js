@@ -47,7 +47,7 @@ export const useFileStore = defineStore(
 
     function setMultipleSelection(newMultipleSelection) {
       multipleSelection.value = newMultipleSelection
-  }
+    }
 
     function clear() {
       rootFileId.value = ''
@@ -89,12 +89,10 @@ export const useFileStore = defineStore(
       setTableLoading,
       clear,
       loadFileList,
-      setMultipleSelection
+      setMultipleSelection,
     }
   },
   {
-    persist: {
-      pick: ['rootFileId', 'rootFilename'], // 指定需要持久化的状态路径
-    },
+    persist: true,
   }
 )
