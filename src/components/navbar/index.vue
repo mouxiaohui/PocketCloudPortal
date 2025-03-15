@@ -12,7 +12,7 @@
         <ul>
           <!-- 首页菜单 -->
           <router-link to="/">
-            <li class="menu-item">
+            <li class="menu-item" :class="curRouteName === 'Home' ? 'curMenuBg' : ''">
               <span>
                 <el-icon size="24"><House /></el-icon>
               </span>
@@ -22,12 +22,12 @@
 
           <!-- 文件菜单 -->
           <router-link to="/file">
-          <li class="menu-item">
-            <span>
-              <el-icon size="24"><Folder /></el-icon>
-            </span>
-            <span>文件</span>
-          </li>
+            <li class="menu-item" :class="curRouteName.endsWith('File') ? 'curMenuBg' : ''">
+              <span>
+                <el-icon size="24"><Folder /></el-icon>
+              </span>
+              <span>文件</span>
+            </li>
           </router-link>
         </ul>
       </div>
@@ -66,31 +66,31 @@
   <!-- 子菜单栏 -->
   <el-aside width="170px" v-show="router.currentRoute.value.meta.collapse" class="border-right-gray p-4">
     <ul class="flex flex-col items-center justify-center">
-      <li class="menu-children-item">
+      <li class="menu-children-item" :class="curRouteName === 'AllFile' ? 'curMenuBg' : ''">
         <span class="flex items-center mr-1">
           <el-icon size="24"><Folder /></el-icon>
         </span>
         <span>{{ fileStore.rootFilename }}</span>
       </li>
-      <li class="menu-children-item">
+      <li class="menu-children-item" :class="curRouteName === 'ImageFile' ? 'curMenuBg' : ''">
         <span class="flex items-center mr-1 w-6 h-6">
           <!-- icon占位 -->
         </span>
         <span>图片</span>
       </li>
-      <li class="menu-children-item">
+      <li class="menu-children-item" :class="curRouteName === 'VideoFile' ? 'curMenuBg' : ''">
         <span class="flex items-center mr-1 w-6 h-6">
           <!-- icon占位 -->
         </span>
         <span>视频</span>
       </li>
-      <li class="menu-children-item">
+      <li class="menu-children-item" :class="curRouteName === 'DocFile' ? 'curMenuBg' : ''">
         <span class="flex items-center mr-1 w-6 h-6">
           <!-- icon占位 -->
         </span>
         <span>文档</span>
       </li>
-      <li class="menu-children-item">
+      <li class="menu-children-item" :class="curRouteName === 'MusicFile' ? 'curMenuBg' : ''">
         <span class="flex items-center mr-1 w-6 h-6">
           <!-- icon占位 -->
         </span>
@@ -121,6 +121,7 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { House, Folder, Delete } from '@element-plus/icons-vue'
 import ThemeBtn from '@/components/theme-btn/index.vue'
@@ -129,6 +130,10 @@ import { clearToken } from '@/utils/cookie'
 
 const router = useRouter()
 const { userStore, fileStore } = useStore()
+console.log(router.currentRoute.value)
+
+// 当前路由名称
+const curRouteName = computed(() => router.currentRoute.value.name)
 
 /**
  * 退出登录
@@ -142,7 +147,11 @@ const handleLogout = () => {
 }
 </script>
 
-<style>
+<style scoped>
+.curMenuBg {
+  background-color: var(--custom-btn-hover-bg);
+}
+
 .main-aside {
   background-color: var(--custom-main-aside-bg); /* 使用自定义变量 */
 }
@@ -177,6 +186,7 @@ const handleLogout = () => {
   width: 140px;
   height: 40px;
   padding-left: 10px;
+  margin-bottom: 6px;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -186,5 +196,10 @@ const handleLogout = () => {
 
 .menu-children-item:hover {
   background-color: var(--custom-btn-hover-bg);
+}
+
+/* element分割线 */
+:deep(.el-divider) {
+  margin: 2px 0;
 }
 </style>

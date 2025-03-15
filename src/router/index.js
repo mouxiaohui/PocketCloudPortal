@@ -24,6 +24,14 @@ const router = createRouter({
           meta: {
             collapse: true,
           },
+          children: [
+            {
+              path: 'all',
+              name: 'AllFile',
+              component: () => import('@/views/file/all-file/index.vue'),
+              alias: '/file',
+            },
+          ],
         },
       ],
     },
