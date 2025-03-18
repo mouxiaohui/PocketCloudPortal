@@ -22,10 +22,13 @@ const { breadcrumbStore, fileStore } = useStore()
 const { breadcrumbs } = storeToRefs(breadcrumbStore)
 
 const handleCrumbClick = (index, id) => {
-  fileStore.setSearchFlag(false)
-  breadcrumbStore.navigate(index)
-  fileStore.setParentId(id)
-  fileStore.loadFileList()
+  if ((index + 1) < breadcrumbs.value.length) {
+    console.log("click");
+    fileStore.setSearchFlag(false)
+    breadcrumbStore.navigate(index)
+    fileStore.setParentId(id)
+    fileStore.loadFileList()
+  }
 }
 </script>
 

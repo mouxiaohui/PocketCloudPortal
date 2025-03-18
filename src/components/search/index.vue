@@ -9,6 +9,7 @@
         :prefix-icon="Search"
       />
     </div>
+    <el-button size="large" text bg class="ml-2" @click="searchFile"> 搜索 </el-button>
   </div>
 </template>
 
@@ -26,6 +27,13 @@ const router = useRouter()
 const searchKeyWord = ref('')
 
 const searchFile = () => {
+  if (searchKeyWord.value === '') {
+    ElMessage({
+      message: '请输入搜索关键字',
+      type: 'warning',
+    })
+    return
+  }
   // 设置FileTypes
   fileStore.setFileTypes('-1')
   // 设置搜索模式
@@ -41,9 +49,15 @@ const searchFile = () => {
       fileTypes: '-1',
     },
     (res) => {
-      // breadcrumbStore.clear()
-      // breadcrumbStore.addCrumb(fileStore.rootFilename, fileStore.rootFileId)
-      // breadcrumbStore.addCrumb('搜索:' + searchKeyWord.value, '-1')
+      breadcrumbStore.clear()
+      breadcrumbStore.addItem({
+        id: fileStore.rootFileId,
+        name: fileStore.rootFilename,
+      })
+      breadcrumbStore.addItem({
+        id: '-1',
+        name: '搜索:' + searchKeyWord.value,
+      })
       fileStore.setFileList(res.data)
       fileStore.setTableLoading(false)
     },

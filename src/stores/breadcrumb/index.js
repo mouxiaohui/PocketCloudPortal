@@ -16,8 +16,6 @@ export const useBreadcrumbStore = defineStore('breadcrumb', () => {
 
   // 点击面包屑导航
   const navigate = (index) => {
-    if (index + 1 === breadcrumbs.value.length) return
-
     breadcrumbs.value = breadcrumbs.value.slice(0, index + 1)
   }
 
