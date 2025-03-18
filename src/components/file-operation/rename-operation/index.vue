@@ -91,7 +91,7 @@ const doRenameFile = async () => {
         fileStore.loadFileList()
       },
       (res) => {
-        ElMessage.error(res.message)
+        ElMessage.error(res.msg)
         loading.value = false
       }
     )

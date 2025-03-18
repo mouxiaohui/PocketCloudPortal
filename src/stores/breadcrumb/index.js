@@ -4,68 +4,30 @@
 
 'use strict'
 
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useBreadcrumbStore = defineStore('breadcrumb', () => {
-  // 面包屑最大展示个数
-  const MAX_BREADCRUMBS = 6
-  // 面包屑数据格式：{ folderName: '文件夹名', folderId: '文件夹ID' }
   const breadcrumbs = ref([])
 
-  const getBreadcrumbs = computed(() => {
-    if (breadcrumbs.value.length > MAX_BREADCRUMBS) {
-      return [
-        breadcrumbs.value[0],
-        { folderName: '...', folderId: null },
-        ...breadcrumbs.value.slice(-(MAX_BREADCRUMBS - 2)),
-      ]
-    }
-
-    return breadcrumbs.value
-  })
-
-  // 当前文件夹ID（计算属性）
-  const currentFolderId = computed(() => {
-    const last = breadcrumbs.value[breadcrumbs.value.length - 1]
-    return last?.folderId || null
-  })
-
-  // 添加面包屑层级
-  const addCrumb = (folderName, folderId) => {
-    // 判断是否已经进入这个文件夹了
-    if (breadcrumbs.value.find((item) => item.folderId === folderId)) {
-      return
-    }
-
-    breadcrumbs.value.push({ folderName, folderId })
+  function clear() {
+    breadcrumbs.value = new Array()
   }
 
   // 点击面包屑导航
-  const navigateToCrumb = (index) => {
-    if (index + 1 >= breadcrumbs.value.length) return false
-    const len = breadcrumbs.value.length
-    // 如果面包屑个数大于最大个数，则需要跳过一些面包屑 (被隐藏的 = 当前面包屑长度 - 最大个数)
-    if (len > MAX_BREADCRUMBS) {
-      if (index > 1) {
-        index = index + (len - MAX_BREADCRUMBS)
-      }
-    }
+  const navigate = (index) => {
+    if (index + 1 === breadcrumbs.value.length) return
+
     breadcrumbs.value = breadcrumbs.value.slice(0, index + 1)
-    return true
   }
 
-  // 重置面包屑
-  const clear = () => {
-    breadcrumbs.value = []
+  function addItem(item) {
+    breadcrumbs.value.push(item)
   }
 
-  return {
-    breadcrumbs,
-    currentFolderId,
-    getBreadcrumbs,
-    addCrumb,
-    navigateToCrumb,
-    clear,
+  function reset(val) {
+    breadcrumbs.value = val
   }
+
+  return { breadcrumbs, clear, addItem, reset, navigate }
 })

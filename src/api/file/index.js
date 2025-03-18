@@ -70,6 +70,15 @@ let fileService = {
       .then((res) => resolve(res))
       .catch((err) => reject(err))
   },
+  getBreadcrumbs: function (params, resolve, reject) {
+    http({
+      url: '/file/breadcrumbs',
+      params: params,
+      method: 'get',
+    })
+      .then((res) => resolve(res))
+      .catch((err) => reject(err))
+  },
 }
 
 export default fileService

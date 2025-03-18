@@ -71,6 +71,10 @@ export const useFileStore = defineStore(
       searchKey.value = newSearchKey
     }
 
+    function refreshParentId() {
+      parentId.value = rootFileId.value
+    }
+
     function clear() {
       rootFileId.value = ''
       rootFilename.value = ''
@@ -79,7 +83,7 @@ export const useFileStore = defineStore(
     function loadFileList() {
       setTableLoading(true)
       if (parentId.value === '') {
-        setParentId(rootFileId.value)
+        refreshParentId()
       }
       fileService.list(
         {
@@ -91,7 +95,7 @@ export const useFileStore = defineStore(
           setTableLoading(false)
         },
         (res) => {
-          ElMessage.error(res.message)
+          ElMessage.error(res.msg)
           setTableLoading(false)
         }
       )
@@ -117,6 +121,8 @@ export const useFileStore = defineStore(
       setSearchFlag,
       setSearchKey,
       setFileTypes,
+      setFileList,
+      refreshParentId,
     }
   },
   {

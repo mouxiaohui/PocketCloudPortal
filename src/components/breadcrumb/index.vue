@@ -1,13 +1,13 @@
 <template>
   <el-breadcrumb separator="/" class="mb-4" :separator-icon="ArrowRight">
-    <el-breadcrumb-item v-for="(crumb, index) in getBreadcrumbs" :key="index" @click="handleCrumbClick(index)">
+    <el-breadcrumb-item v-for="(item, index) in breadcrumbs" :key="index" @click="handleCrumbClick(index, item.id)">
       <span
         :class="{
-          'cursor-pointer hover:text-blue-400': index < getBreadcrumbs.length - 1,
-          'text-gray-500': index === getBreadcrumbs.length - 1,
+          'cursor-pointer hover:text-blue-400': index < breadcrumbs.length - 1,
+          'text-gray-500': index === breadcrumbs.length - 1,
         }"
       >
-        {{ crumb.folderName }}
+        {{ item.name }}
       </span>
     </el-breadcrumb-item>
   </el-breadcrumb>
@@ -19,13 +19,13 @@ import { storeToRefs } from 'pinia'
 import { ArrowRight } from '@element-plus/icons-vue'
 
 const { breadcrumbStore, fileStore } = useStore()
-const { getBreadcrumbs } = storeToRefs(breadcrumbStore)
+const { breadcrumbs } = storeToRefs(breadcrumbStore)
 
-const handleCrumbClick = (index) => {
-  if (breadcrumbStore.navigateToCrumb(index)) {
-    fileStore.setParentId(breadcrumbStore.currentFolderId)
-    fileStore.loadFileList()
-  }
+const handleCrumbClick = (index, id) => {
+  fileStore.setSearchFlag(false)
+  breadcrumbStore.navigate(index)
+  fileStore.setParentId(id)
+  fileStore.loadFileList()
 }
 </script>
 
