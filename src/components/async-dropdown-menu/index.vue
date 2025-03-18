@@ -1,6 +1,6 @@
 <template>
   <el-dropdown trigger="click">
-    <div>
+    <div class="w-6 h-6">
       <span
         style="display: none"
         class="file-operation w-6 h-6 cursor-pointer flex items-center justify-center rounded-md"
