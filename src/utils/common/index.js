@@ -5,6 +5,7 @@
 'use strict'
 
 let pocketUtil = {
+  COMMON_SEPARATOR: '__,__',
   goHome() {
     window.location.href = '/'
   },

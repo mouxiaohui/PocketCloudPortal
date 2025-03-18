@@ -21,9 +21,11 @@
         </div>
         <div class="operation">
           <el-tooltip content="放入回收站" effect="light" placement="top" :hide-after="0">
-            <div class="w-full h-full flex items-center justify-center">
-              <el-icon><Delete /></el-icon>
-            </div>
+            <delete-operation :item="row">
+              <div class="w-full h-full flex items-center justify-center">
+                <el-icon><Delete /></el-icon>
+              </div>
+            </delete-operation>
           </el-tooltip>
         </div>
         <div class="operation" @click="cancelMulSelect">
@@ -44,6 +46,7 @@ import useStore from '@/stores'
 import { storeToRefs } from 'pinia'
 import { Download, Share, CircleCloseFilled, Delete } from '@element-plus/icons-vue'
 import DownloadOperation from '@/components/file-operation/download-operation/index.vue'
+import DeleteOperation from '@/components/file-operation/delete-operation/index.vue'
 
 const { fileStore } = useStore()
 const { multipleSelection } = storeToRefs(fileStore)

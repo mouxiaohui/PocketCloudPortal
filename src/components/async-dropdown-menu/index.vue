@@ -30,7 +30,9 @@
 
         <el-divider />
 
-        <el-dropdown-item>放入回收站</el-dropdown-item>
+        <delete-operation :item="row">
+          <el-dropdown-item>放入回收站</el-dropdown-item>
+        </delete-operation>
       </el-dropdown-menu>
     </template>
   </el-dropdown>
@@ -40,6 +42,7 @@
 import { defineProps } from 'vue'
 import RenameOperation from '@/components/file-operation/rename-operation/index.vue'
 import DownloadOperation from '@/components/file-operation/download-operation/index.vue'
+import DeleteOperation from '@/components/file-operation/delete-operation/index.vue'
 
 defineProps({
   row: Object,
