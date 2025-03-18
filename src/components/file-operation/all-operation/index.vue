@@ -72,7 +72,7 @@ const cancelMulSelect = () => {
   background-color: var(--custom-all-operation-bg); /* 使用自定义变量 */
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.1); /* 半透明白色 */
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), /* 外阴影基础层 */ inset 0 -1px 1px rgba(0, 0, 0, 0.1); /* 底部内阴影 */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), /* 外阴影基础层 */ inset 0 -1px 1px rgba(0, 0, 0, 0.1); /* 底部内阴影 */
 }
 
 .operation {
