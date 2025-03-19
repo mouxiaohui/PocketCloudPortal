@@ -1,5 +1,5 @@
 <template>
-  <div @click="renameDialogVisible = true">
+  <div @click="showDialog">
     <slot></slot>
   </div>
   <el-dialog
@@ -55,7 +55,7 @@ const renameDialogVisible = ref(false)
 
 // 表单数据
 const form = ref({
-  filename: props.item.filename,
+  filename: '',
 })
 
 const formRef = ref(null)
@@ -109,5 +109,10 @@ const handleDialogOpened = () => {
     inputRef.value?.focus() // 聚焦输入框
     inputRef.value?.select() // 可选：选中已有文本
   })
+}
+
+const showDialog = () => {
+  renameDialogVisible.value = true
+  form.value.filename = props.item.filename
 }
 </script>
