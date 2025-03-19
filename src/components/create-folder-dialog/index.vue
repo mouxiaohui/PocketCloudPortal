@@ -5,6 +5,7 @@
     width="30%"
     :show-close="false"
     :close-on-click-modal="false"
+    @opened="handleDialogOpened"
   >
     <el-form :model="form" :rules="rules" ref="formRef" class="flex flex-col items-center justify-center">
       <el-form-item prop="folderName">
@@ -16,7 +17,7 @@
             </svg>
           </span>
           <!-- 输入框 -->
-          <el-input v-model="form.folderName" style="width: 240px" placeholder="请输入文件夹名称" />
+          <el-input ref="inputRef" v-model="form.folderName" style="width: 240px" placeholder="请输入文件夹名称" />
         </div>
       </el-form-item>
     </el-form>
@@ -30,11 +31,13 @@
 </template>
 
 <script setup>
-import { watch, ref, defineProps, defineEmits } from 'vue'
+import { watch, ref, defineProps, defineEmits, nextTick } from 'vue'
 import useStore from '@/stores'
 import fileService from '@/api/file';
 
 const { fileStore } = useStore()
+
+const inputRef = ref(null)
 
 // 表单数据
 const form = ref({
@@ -117,5 +120,12 @@ const confirmDialog = async () => {
     // 验证失败时保持对话框打开
     console.log('表单验证失败', error)
   }
+}
+
+const handleDialogOpened = () => {
+  nextTick(() => {
+    inputRef.value?.focus() // 聚焦输入框
+    inputRef.value?.select() // 可选：选中已有文本
+  })
 }
 </script>

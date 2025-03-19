@@ -9,6 +9,7 @@
     :append-to-body="true"
     :modal-append-to-body="false"
     :center="true"
+    @opened="handleDialogOpened"
   >
     <el-form :model="form" :rules="rules" ref="formRef" class="flex flex-col items-center justify-center">
       <el-form-item prop="filename">
@@ -20,7 +21,7 @@
             </svg>
           </span>
           <!-- 输入框 -->
-          <el-input v-model="form.filename" style="width: 340px" placeholder="请输入文件名称" />
+          <el-input ref="inputRef" v-model="form.filename" style="width: 340px" placeholder="请输入文件名称" />
         </div>
       </el-form-item>
     </el-form>
@@ -34,12 +35,14 @@
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue'
+import { ref, defineProps, nextTick } from 'vue'
 import fileService from '@/api/file'
 import useStore from '@/stores'
 import { ElMessage } from 'element-plus'
 
 const { fileStore } = useStore()
+
+const inputRef = ref(null)
 
 const props = defineProps({
   item: {
@@ -99,5 +102,12 @@ const doRenameFile = async () => {
     // 验证失败时保持对话框打开
     console.log('表单验证失败', error)
   }
+}
+
+const handleDialogOpened = () => {
+  nextTick(() => {
+    inputRef.value?.focus() // 聚焦输入框
+    inputRef.value?.select() // 可选：选中已有文本
+  })
 }
 </script>
