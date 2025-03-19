@@ -92,6 +92,15 @@ const registerForm = reactive({
   emailCode: '', // 邮箱验证码
 })
 
+// 表单重置
+const resetRegisterForm = () => {
+  registerForm.username = ''
+  registerForm.password = ''
+  registerForm.confirmPassword = ''
+  registerForm.email = ''
+  registerForm.emailCode = ''
+}
+
 // 表单引用
 const registerFormRef = ref({
   username: '', // 用户名
@@ -167,14 +176,7 @@ const handleRegister = async () => {
       submitForm,
       (res) => {
         ElMessage.success('注册成功')
-        // 表单重置
-        registerForm = reactive({
-          username: '', // 用户名
-          password: '', // 密码
-          confirmPassword: '', // 确认密码
-          email: '', // 邮箱
-          emailCode: '', // 邮箱验证码
-        })
+        resetRegisterForm()
       },
       (res) => {
         ElMessage.error(res.msg)

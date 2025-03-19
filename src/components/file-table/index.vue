@@ -2,7 +2,7 @@
   <div>
     <el-table
       class="w-full"
-      :data="fileStore.fileList"
+      :data="fileList"
       v-loading="fileStore.tableLoading"
       :height="tableHeight"
       :row-style="{ height: '45px' }"
@@ -57,13 +57,16 @@ import useStore from '@/stores'
 import AllOperation from '@/components/file-operation/all-operation/index.vue'
 import { storeToRefs } from 'pinia'
 import fileService from '@/api/file'
+import { getToken } from '@/utils/cookie'
+import ImageViewer from '@luohc92/vue3-image-viewer'
+import '@luohc92/vue3-image-viewer/dist/style.css'
 
 // 利用defineAsyncComponent延迟加载复杂组件
 const AsyncDropdownMenu = defineAsyncComponent(() => import('@/components/async-dropdown-menu/index.vue'))
 
 const { fileStore, breadcrumbStore } = useStore()
 
-const { multipleSelection } = storeToRefs(fileStore)
+const { multipleSelection, fileList } = storeToRefs(fileStore)
 
 // 表格高度
 const tableHeight = ref(window.innerHeight - 130)
@@ -109,21 +112,60 @@ const handleSelectionChange = (val) => {
 }
 
 /**
+ * 图片展示
+ */
+const showImg = (row) => {
+  let imgs = new Array()
+  let imgIndex = 0
+  let url = import.meta.env.VITE_BASE_URL_API + '/file/preview?fileId='
+  for (let i = 0, len = fileList.value.length; i < len; ++i) {
+    if (fileList.value[i].fileType === 7) {
+      imgs.push(url + encodeURIComponent(fileList.value[i].id) + '&Authorization=' + getToken())
+      if (fileList.value[i].id === row.id) {
+        imgIndex = imgs.length - 1
+      }
+    }
+  }
+
+  ImageViewer({
+    images: imgs,
+    curIndex: imgIndex,
+    zIndex: 2000,
+    showDownload: false,
+    showThumbnail: true,
+    handlePosition: 'bottom',
+    maskBgColor: 'rgba(0,0,0,0.7)',
+    onClose: () => {},
+  })
+}
+
+/**
  * 处理文件点击事件
  */
 const clickFilename = (row) => {
   switch (row.fileType) {
     case 0:
       goInFolder(row.id)
+      break
     case 3:
+      break
     case 4:
-    case 10:
+      break
     case 5:
+      break
     case 6:
+      break
     case 7:
+      showImg(row)
+      break
     case 8:
+      break
     case 9:
+      break
     case 11:
+      break
+    case 10:
+      break
     default:
       break
   }
