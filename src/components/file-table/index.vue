@@ -53,6 +53,7 @@
 
 <script setup>
 import { ref, watch, defineAsyncComponent } from 'vue'
+import { useRouter } from 'vue-router'
 import useStore from '@/stores'
 import AllOperation from '@/components/file-operation/all-operation/index.vue'
 import { storeToRefs } from 'pinia'
@@ -63,6 +64,8 @@ import '@luohc92/vue3-image-viewer/dist/style.css'
 
 // 利用defineAsyncComponent延迟加载复杂组件
 const AsyncDropdownMenu = defineAsyncComponent(() => import('@/components/async-dropdown-menu/index.vue'))
+
+const router = useRouter()
 
 const { fileStore, breadcrumbStore } = useStore()
 
@@ -140,6 +143,27 @@ const showImg = (row) => {
 }
 
 /**
+ * 新窗口打开
+ */
+const openNewPage = (path, name, params, query) => {
+  const { href } = router.resolve({
+    path: path,
+    name: name,
+    params: params,
+    query: query,
+  })
+  window.open(href, '_blank')
+}
+
+const showMusic = (row) => {
+  openNewPage('/preview/music', 'PreviewMusic', {
+    parentId: encodeURIComponent(row.parentId),
+    fileId: encodeURIComponent(row.id),
+    filename: row.filename,
+  })
+}
+
+/**
  * 处理文件点击事件
  */
 const clickFilename = (row) => {
@@ -159,6 +183,7 @@ const clickFilename = (row) => {
       showImg(row)
       break
     case 8:
+      showMusic(row)
       break
     case 9:
       break

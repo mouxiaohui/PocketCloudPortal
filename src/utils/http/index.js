@@ -15,13 +15,6 @@ const http = axios.create({
   },
 })
 
-/**
- * 清除用户数据和token
- */
-const logout = () => {
-  // TODO 清除用户数据和token
-}
-
 // 添加请求拦截器
 http.interceptors.request.use(
   (config) => {

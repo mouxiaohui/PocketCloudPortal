@@ -74,6 +74,11 @@ const router = createRouter({
       ],
     },
     {
+      path: '/preview/music/:parentId/:fileId/:filename',
+      name: 'PreviewMusic',
+      component: () => import('@/views/preview/music/index.vue'),
+    },
+    {
       path: '/500',
       name: 'Error500',
       component: () => import('@/views/error/500/index.vue'),
