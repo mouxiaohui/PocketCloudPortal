@@ -33,19 +33,16 @@
       </div>
     </div>
 
-    <!-- 设置 -->
     <div class="mt-auto">
-      <!-- 上传下载按钮 -->
+      <!-- 任务列表按钮 -->
       <div class="flex justify-center items-center mb-6">
-        <el-button circle>
-          <svg class="ali-icon" aria-hidden="true">
-            <use xlink:href="#icon-a-shangchuanxiazai"></use>
-          </svg>
-        </el-button>
+        <task-list />
       </div>
 
       <!-- 切换主题按钮 -->
-      <theme-btn />
+      <div class="flex justify-center items-center mb-6">
+        <theme-btn />
+      </div>
 
       <el-dropdown placement="top-start" class="select-none">
         <!-- 头像 -->
@@ -139,6 +136,7 @@ import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { House, Folder, Delete } from '@element-plus/icons-vue'
 import ThemeBtn from '@/components/theme-btn/index.vue'
+import TaskList from '@/components/task-list/index.vue'
 import useStore from '@/stores'
 import { clearToken } from '@/utils/cookie'
 

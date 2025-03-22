@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center items-center mb-6">
+  <div>
     <el-button @click="toggleDark()" :icon="isDark ? Moon : Sunny" circle />
   </div>
 </template>
