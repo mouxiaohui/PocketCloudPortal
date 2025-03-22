@@ -17,7 +17,7 @@ export function MD5(file, callback) {
   // 获取文件切片方法，兼容不同浏览器
   var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
     file = file,
-    chunkSize = 1024 * 1024 * 2, // 每个切片的大小，这里设置为2MB
+    chunkSize = Number(import.meta.env.VITE_CHUNK_SIZE), // 每个切片的大小
     chunks = Math.ceil(file.size / chunkSize), // 计算需要切分的块数
     currentChunk = 0, // 当前正在处理的块号
     spark = new sparkMD5.ArrayBuffer(), // 创建spark-md5实例，用于处理ArrayBuffer类型的MD5计算

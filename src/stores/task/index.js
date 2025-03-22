@@ -23,8 +23,14 @@ export const useTaskStore = defineStore('task', () => {
    */
   const taskList = ref([])
 
+  const viewFlag = ref(false)
+
   function add(taskItem) {
     taskList.value.push(taskItem)
+  }
+
+  function updateViewFlag(newViewFlag) {
+    viewFlag.value = newViewFlag
   }
 
   function remove(filename) {
@@ -36,9 +42,37 @@ export const useTaskStore = defineStore('task', () => {
     }
   }
 
+  function updateStatus(param) {
+    let taskItem = taskList.value.find((taskItem) => param.filename === taskItem.filename)
+    taskItem.status = param.status
+    taskItem.statusText = param.statusText
+  }
+
+  function updateProcess(param) {
+    let taskItem = taskList.value.find((taskItem) => param.filename === taskItem.filename)
+    taskItem.speed = param.speed
+    taskItem.percentage = param.percentage
+    taskItem.uploadedSize = param.uploadedSize
+    taskItem.timeRemaining = param.timeRemaining
+  }
+
+  function getUploadTask(filename) {
+    return taskList.value.find((taskItem) => filename === taskItem.filename)
+  }
+
   function clear() {
     taskList.value = new Array()
   }
 
-  return { taskList, clear, remove, add }
+  return {
+    taskList,
+    viewFlag,
+    clear,
+    remove,
+    add,
+    updateViewFlag,
+    updateStatus,
+    getUploadTask,
+    updateProcess,
+  }
 })

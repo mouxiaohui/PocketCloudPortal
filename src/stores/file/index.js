@@ -127,7 +127,7 @@ export const useFileStore = defineStore(
   },
   {
     persist: {
-      pick: ['rootFileId', 'rootFilename'], // 指定需要持久化的状态路径
+      pick: ['rootFileId', 'rootFilename', 'parentId'], // 指定需要持久化的状态路径
     },
   }
 )

@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center">
-    <el-popover placement="right" :width="600" trigger="click">
+    <el-popover placement="right" :width="600" trigger="click" v-model:visible="viewFlag">
       <template #reference>
         <el-button circle>
           <svg class="ali-icon" aria-hidden="true">
@@ -95,7 +95,7 @@ const { FILE_STATUS } = pocketUtil
 
 const { taskStore } = useStore()
 
-const { taskList } = storeToRefs(taskStore)
+const { taskList, viewFlag } = storeToRefs(taskStore)
 
 const colors = [
   { color: '#909399', percentage: 30 },
