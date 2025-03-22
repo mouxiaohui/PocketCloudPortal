@@ -109,6 +109,7 @@ const handleLogin = async () => {
             userStore.setEmail(res.data.email)
             fileStore.setRootFileId(res.data.rootFileId)
             fileStore.setRootFilename(res.data.rootFilename)
+            fileStore.parentId(res.data.rootFileId)
           },
           (res) => {
             console.log('error: ', res)
@@ -140,7 +141,7 @@ const getCaptcha = async () => {
       loginForm.captchaKey = res.data.captchaKey
     },
     (res) => {
-      ElMessage.error(res.data.msg)
+      console.log('error: ', res)
     }
   )
 }

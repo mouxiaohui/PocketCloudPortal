@@ -6,6 +6,7 @@
 
 import axios from 'axios'
 import { getToken } from '@/utils/cookie'
+import { ElMessage } from 'element-plus'
 
 const http = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL_API,
@@ -22,9 +23,9 @@ http.interceptors.request.use(
       config.data = JSON.stringify(config.data)
     }
 
-    let token = getToken()
+    const token = getToken()
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`
+      config.headers['Authorization'] = token
     }
 
     return config
@@ -46,11 +47,9 @@ http.interceptors.response.use(
     }
   },
   (error) => {
-    // console.error(error.response)
-    switch (error.response.data.code) {
-      default: // 其他错误
-        return Promise.reject(error.response.data)
-    }
+    console.log(error)
+    ElMessage.error('请求失败')
+    return
   }
 )
 
